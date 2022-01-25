@@ -1,21 +1,49 @@
+const Category = require("../models/Category");
+
 module.exports = {
   viewDashboard: (req, res) => {
-    res.render("admin/dashboard/view_dashboard")
+    res.render("admin/dashboard/view_dashboard");
   },
-  
-  viewCategory: (req, res) => {
-    res.render("admin/category/view_category")
+
+  viewCategory: async (req, res) => {
+    const category = await Category.find();
+    // console.log(category);
+    res.render("admin/category/view_category", { category });
+  },
+
+  addCategory: async (req, res) => {
+    const { name } = req.body;
+
+    await Category.create({ name });
+    res.redirect("/admin/category");
+  },
+
+  updateCategory: async (req, res) => {
+    const { id, name } = req.body;
+
+    const category = await Category.findOne({ _id: id });
+    category.name = name;
+    await category.save();
+    res.redirect("/admin/category");
+  },
+
+  deleteCatergory: async (req, res) => {
+    const { id } = req.params;
+
+    const category = await Category.findOne({ _id: id });
+    await category.remove();
+    res.redirect("/admin/category");
   },
 
   viewBank: (req, res) => {
-    res.render("admin/bank/view_bank")
+    res.render("admin/bank/view_bank");
   },
 
   viewItem: (req, res) => {
-    res.render("admin/item/view_item")
+    res.render("admin/item/view_item");
   },
 
   viewBooking: (req, res) => {
-    res.render("admin/booking/view_booking")
-  }
-}
+    res.render("admin/booking/view_booking");
+  },
+};
