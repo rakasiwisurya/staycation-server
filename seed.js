@@ -231,10 +231,10 @@ var data = [
         categoryId: "5e96cbe292b97300fc901111",
       },
 
-      // Anggana
+      // Rakana
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc902225"),
-        title: "Anggana",
+        title: "Rakana",
         price: 20,
         sumBooking: 4,
         country: "Indonesia",
@@ -1026,7 +1026,7 @@ var data = [
         invoice: 1231231,
         itemId: {
           _id: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
-          title: "Village Angga",
+          title: "Village Raka",
           price: 6,
           duration: 2,
         },
@@ -1034,10 +1034,10 @@ var data = [
         memberId: mongoose.Types.ObjectId("5e96cbe292b97300fc903333"),
         bankId: mongoose.Types.ObjectId("5e96cbe292b97300fc903323"),
         payments: {
-          proofPayment: "images/bukti.jpeg",
+          proofPayment: "images/buktibayar.jpeg",
           bankFrom: "BCA",
-          status: "Proses",
-          accountHolder: "ang",
+          status: "Process",
+          accountHolder: "Erik",
         },
       },
     ],
@@ -1050,17 +1050,17 @@ var data = [
     documents: [
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903333"),
-        firstName: "Elfin",
-        lastName: "Sanjaya",
-        email: "elfinsanjaya12@gmail.com",
+        firstName: "Rakasiwi",
+        lastName: "Surya",
+        email: "rakasiwisurya@gmail.com",
         phoneNumber: "082377954008",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903334"),
-        firstName: "Yein",
-        lastName: "Narayana",
-        email: "elfinsanjaya1207@gmail.com",
-        phoneNumber: "082377954008",
+        firstName: "Ikbal",
+        lastName: "Aziz",
+        email: "ikbalaziz@gmail.com",
+        phoneNumber: "082377954009",
       },
     ],
   },
@@ -1069,17 +1069,17 @@ var data = [
     documents: [
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903322"),
-        nameBank: "Mandiri",
+        nameBank: "BCA",
         nomorRekening: "089898",
-        name: "elfin",
-        imageUrl: "images/logo bca.png",
+        name: "Raka",
+        imageUrl: "images/logo-bca.png",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903323"),
-        nameBank: "BCA",
+        nameBank: "Mandiri",
         nomorRekening: "878678",
-        name: "elfin",
-        imageUrl: "images/logo mandiri.png",
+        name: "Ikbal",
+        imageUrl: "images/logo-mandiri.png",
       },
     ],
   },
@@ -1089,12 +1089,12 @@ var data = [
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903345"),
         username: "admin",
-        password: "rahasia",
+        password: "admin123",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903346"),
         username: "superadmin",
-        password: "rahasia",
+        password: "admin123",
         role: "admin",
       },
     ],
