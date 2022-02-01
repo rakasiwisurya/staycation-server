@@ -68,10 +68,14 @@ module.exports = {
   viewDashboard: async (req, res) => {
     try {
       const member = await Member.find();
+      const booking = await Booking.find();
+      const item = await Item.find();
 
       res.render("admin/dashboard/view_dashboard", {
         title: "Staycation | Dashboard",
         member,
+        booking,
+        item,
         user: req.session.user,
       });
     } catch (error) {
