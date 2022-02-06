@@ -10,6 +10,7 @@ const Activity = require("../models/Activity");
 const Users = require("../models/Users");
 const Booking = require("../models/Booking");
 const Member = require("../models/Member");
+const cloudinary = require("../third-party/cloudinary");
 
 module.exports = {
   viewSignIn: (req, res) => {
@@ -150,10 +151,15 @@ module.exports = {
 
   viewBank: async (req, res) => {
     try {
-      const bank = await Bank.find();
+      const bankItems = await Bank.find();
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
+
+      const bank = bankItems.map((item) => ({
+        ...item._doc,
+        imageUrl: cloudinary.url(item.imageUrl),
+      }));
 
       res.render("admin/bank/view_bank", {
         title: "Staycation | Bank",
@@ -169,13 +175,18 @@ module.exports = {
   addBank: async (req, res) => {
     try {
       const { nameBank, nomorRekening, name } = req.body;
-      const { filename } = req.file;
+
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "staycation_images",
+        use_filename: true,
+        unique_filename: false,
+      });
 
       await Bank.create({
         nameBank,
         nomorRekening,
         name,
-        imageUrl: `images/${filename}`,
+        imageUrl: result.public_id,
       });
 
       req.flash("alertMessage", "Success Add Bank");
@@ -195,8 +206,16 @@ module.exports = {
       const bank = await Bank.findOne({ _id: id });
 
       if (req.file) {
-        await fs.unlink(path.join(`public/${bank.imageUrl}`));
-        bank.imageUrl = `images/${req.file.filename}`;
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: "staycation_images",
+          use_filename: true,
+          unique_filename: false,
+        });
+        
+        // await fs.unlink(path.join(`public/${bank.imageUrl}`));
+        await cloudinary.uploader.destroy(bank.imageUrl);
+
+        bank.imageUrl = result.public_id;
       }
       bank.nameBank = nameBank;
       bank.nomorRekening = nomorRekening;
@@ -208,6 +227,7 @@ module.exports = {
       req.flash("alertStatus", "success");
       res.redirect("/admin/bank");
     } catch (error) {
+      console.log(error);
       req.flash("alertMessage", error.message);
       req.flash("alertStatus", "danger");
       res.redirect("/admin/bank");
@@ -215,10 +235,13 @@ module.exports = {
   },
 
   deleteBank: async (req, res) => {
+    console.log(req);
+
     try {
       const { id } = req.params;
       const bank = await Bank.findOne({ _id: id });
-      await fs.unlink(path.join(`public/${bank.imageUrl}`));
+      // await fs.unlink(path.join(`public/${bank.imageUrl}`));
+      await cloudinary.uploader.destroy(bank.imageUrl);
       await bank.remove();
 
       req.flash("alertMessage", "Success Delete Bank");
@@ -276,8 +299,14 @@ module.exports = {
         await category.save();
 
         for (let i = 0; i < req.files.length; i++) {
+          const result = await cloudinary.uploader.upload(req.files[i].path, {
+            folder: "staycation_images",
+            use_filename: true,
+            unique_filename: false,
+          });
+
           const imageSave = await Image.create({
-            imageUrl: `images/${req.files[i].filename}`,
+            imageUrl: result.public_id,
           });
 
           item.imageId.push({ _id: imageSave._id });
@@ -299,10 +328,18 @@ module.exports = {
     try {
       const { id } = req.params;
 
-      const item = await Item.findOne({ _id: id }).populate({
+      const items = await Item.findOne({ _id: id }).populate({
         path: "imageId",
         select: "id imageUrl",
       });
+
+      const item = {
+        ...items._doc,
+        imageId: items.imageId.map((value) => ({
+          ...value._doc,
+          imageUrl: cloudinary.url(value.imageUrl),
+        })),
+      };
 
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
@@ -363,8 +400,16 @@ module.exports = {
       if (req.files.length > 0) {
         for (let i = 0; i < item.imageId.length; i++) {
           const imageUpdate = await Image.findOne({ _id: item.imageId[i]._id });
-          await fs.unlink(path.join(`public/${imageUpdate.imageUrl}`));
-          imageUpdate.imageUrl = `images/${req.files[i].filename}`;
+          // await fs.unlink(path.join(`public/${imageUpdate.imageUrl}`));
+          await cloudinary.uploader.destroy(imageUpdate.imageUrl);
+
+          const result = await cloudinary.uploader.upload(req.files[i].path, {
+            folder: "staycation_images",
+            use_filename: true,
+            unique_filename: false,
+          });
+
+          imageUpdate.imageUrl = result.public_id;
           await imageUpdate.save();
         }
       }
@@ -395,7 +440,8 @@ module.exports = {
       for (let i = 0; i < item.imageId.length; i++) {
         Image.findOne({ _id: item.imageId[i]._id })
           .then((image) => {
-            fs.unlink(path.join(`public/${image.imageUrl}`));
+            cloudinary.uploader.destroy(image.imageUrl);
+            // fs.unlink(path.join(`public/${image.imageUrl}`));
             image.remove();
           })
           .catch((error) => {
@@ -423,8 +469,18 @@ module.exports = {
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
 
-      const feature = await Feature.find({ itemId });
-      const activity = await Activity.find({ itemId });
+      const featureItems = await Feature.find({ itemId });
+      const activityItems = await Activity.find({ itemId });
+
+      const feature = featureItems.map((item) => ({
+        ...item._doc,
+        imageUrl: cloudinary.url(item.imageUrl),
+      }));
+
+      const activity = activityItems.map((item) => ({
+        ...item._doc,
+        imageUrl: cloudinary.url(item.imageUrl),
+      }));
 
       res.render("admin/item/detail_item/view_detail_item", {
         title: "Staycation | Detail Item",
@@ -451,11 +507,17 @@ module.exports = {
         return res.redirect(`/admin/item/show-detail-item/${itemId}`);
       }
 
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "staycation_images",
+        use_filename: true,
+        unique_filename: false,
+      });
+
       const feature = await Feature.create({
         name,
         qty,
         itemId,
-        imageUrl: `images/${req.file.filename}`,
+        imageUrl: result.public_id,
       });
 
       const item = await Item.findOne({ _id: itemId });
@@ -479,8 +541,16 @@ module.exports = {
       const feature = await Feature.findOne({ _id: id });
 
       if (req.file) {
-        await fs.unlink(path.join(`public/${feature.imageUrl}`));
-        feature.imageUrl = `images/${req.file.filename}`;
+        // await fs.unlink(path.join(`public/${feature.imageUrl}`));
+        await cloudinary.uploader.destroy(feature.imageUrl);
+
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: "staycation_images",
+          use_filename: true,
+          unique_filename: false,
+        });
+
+        feature.imageUrl = result.public_id;
       }
       feature.name = name;
       feature.qty = qty;
@@ -510,7 +580,8 @@ module.exports = {
         }
       }
 
-      await fs.unlink(path.join(`public/${feature.imageUrl}`));
+      // await fs.unlink(path.join(`public/${feature.imageUrl}`));
+      await cloudinary.uploader.destroy(feature.imageUrl);
       await feature.remove();
 
       req.flash("alertMessage", "Success Delete Feature");
@@ -533,11 +604,17 @@ module.exports = {
         return res.redirect(`/admin/item/show-detail-item/${itemId}`);
       }
 
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "staycation_images",
+        use_filename: true,
+        unique_filename: false,
+      });
+
       const activity = await Activity.create({
         name,
         type,
         itemId,
-        imageUrl: `images/${req.file.filename}`,
+        imageUrl: result.public_id,
       });
 
       const item = await Item.findOne({ _id: itemId });
@@ -561,8 +638,16 @@ module.exports = {
       const activity = await Activity.findOne({ _id: id });
 
       if (req.file) {
-        await fs.unlink(path.join(`public/${activity.imageUrl}`));
-        activity.imageUrl = `images/${req.file.filename}`;
+        // await fs.unlink(path.join(`public/${activity.imageUrl}`));
+        await cloudinary.uploader.destroy(activity.imageUrl);
+
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: "staycation_images",
+          use_filename: true,
+          unique_filename: false,
+        });
+
+        activity.imageUrl = result.public_id;
       }
       activity.name = name;
       activity.type = type;
@@ -592,7 +677,8 @@ module.exports = {
         }
       }
 
-      await fs.unlink(path.join(`public/${activity.imageUrl}`));
+      // await fs.unlink(path.join(`public/${activity.imageUrl}`));
+      await cloudinary.uploader.destroy(activity.imageUrl);
       await activity.remove();
 
       req.flash("alertMessage", "Success Delete Activity");
@@ -629,9 +715,23 @@ module.exports = {
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
 
-      const booking = await Booking.findOne({ _id: id })
+      const bookingItem = await Booking.findOne({ _id: id })
         .populate("memberId")
         .populate("bankId");
+
+      const booking = {
+        ...bookingItem._doc,
+        payments: {
+          ...bookingItem.payments,
+          proofPayment: cloudinary.url(bookingItem.payments.proofPayment),
+        },
+        bankId: {
+          ...bookingItem.bankId._doc,
+          imageUrl: cloudinary.url(bookingItem.bankId.imageUrl),
+        },
+      };
+
+      console.log(booking);
 
       res.render("admin/booking/show_detail_booking", {
         title: "Staycation | Detail Booking",

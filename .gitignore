@@ -1,8 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # image upload
-/public/images/*
-!/public/images/.gitkeep
+/public/staycation_images/*
+!/public/staycation_images/.gitkeep
 
 # dependencies
 /node_modules

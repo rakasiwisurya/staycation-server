@@ -1,9 +1,11 @@
+require("dotenv").config();
 var seeder = require("mongoose-seed");
 var mongoose = require("mongoose");
 
 // Connect to MongoDB via Mongoose
+console.log(process.env.BASE_URL_LOCALMONGOCONNECT);
 seeder.connect(
-  "mongodb://localhost:27017/db_staycation",
+  process.env.BASE_URL_LOCALMONGOCONNECT,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -663,152 +665,152 @@ var data = [
       {
         // done
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb1"),
-        imageUrl: "images/image-mostpicked-1-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-1-min.jpg",
       },
       // done
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb2"),
-        imageUrl: "images/image-mostpicked-2-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-2-min.jpg",
       },
       // done
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb3"),
-        imageUrl: "images/image-mostpicked-3-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-3-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb4"),
-        imageUrl: "images/image-mostpicked-4-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-4-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb5"),
-        imageUrl: "images/item-1.png",
+        imageUrl: "staycation_images/item-1.png",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb6"),
-        imageUrl: "images/image-mostpicked-5-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-5-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb7"),
-        imageUrl: "images/image-mostpicked-7-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-7-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb8"),
-        imageUrl: "images/image-mostpicked-8-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-8-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cdb9"),
-        imageUrl: "images/image-mostpicked-9-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-9-min.jpg",
       },
       {
         // done
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd10"),
-        imageUrl: "images/image-mostpicked-10-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-10-min.jpg",
       },
       // done
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd11"),
-        imageUrl: "images/image-mostpicked-11-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-11-min.jpg",
       },
       // done
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd12"),
-        imageUrl: "images/image-mostpicked-12-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-12-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd13"),
-        imageUrl: "images/image-mostpicked-13-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-13-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd14"),
-        imageUrl: "images/image-mostpicked-14-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-14-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd15"),
-        imageUrl: "images/image-mostpicked-15-min.jpg",
+        imageUrl: "staycation_images/image-mostpicked-15-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd16"),
-        imageUrl: "images/image-category-1-min.jpg",
+        imageUrl: "staycation_images/image-category-1-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd17"),
-        imageUrl: "images/image-category-2-min.jpg",
+        imageUrl: "staycation_images/image-category-2-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd18"),
-        imageUrl: "images/image-category-3-min.jpg",
+        imageUrl: "staycation_images/image-category-3-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd19"),
-        imageUrl: "images/image-category-4-min.jpg",
+        imageUrl: "staycation_images/image-category-4-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd20"),
-        imageUrl: "images/image-category-5-min.jpg",
+        imageUrl: "staycation_images/image-category-5-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd21"),
-        imageUrl: "images/image-category-6-min.jpg",
+        imageUrl: "staycation_images/image-category-6-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd22"),
-        imageUrl: "images/image-category-7-min.jpg",
+        imageUrl: "staycation_images/image-category-7-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd23"),
-        imageUrl: "images/image-category-8-min.jpg",
+        imageUrl: "staycation_images/image-category-8-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd24"),
-        imageUrl: "images/image-category-9-min.jpg",
+        imageUrl: "staycation_images/image-category-9-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd25"),
-        imageUrl: "images/image-category-7-min.jpg",
+        imageUrl: "staycation_images/image-category-7-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd26"),
-        imageUrl: "images/image-category-8-min.jpg",
+        imageUrl: "staycation_images/image-category-8-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd27"),
-        imageUrl: "images/image-category-9-min.jpg",
+        imageUrl: "staycation_images/image-category-9-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd28"),
-        imageUrl: "images/image-category-10-min.jpg",
+        imageUrl: "staycation_images/image-category-10-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd29"),
-        imageUrl: "images/image-category-11-min.jpg",
+        imageUrl: "staycation_images/image-category-11-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd30"),
-        imageUrl: "images/image-category-12-min.jpg",
+        imageUrl: "staycation_images/image-category-12-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd31"),
-        imageUrl: "images/image-category-13-min.jpg",
+        imageUrl: "staycation_images/image-category-13-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd32"),
-        imageUrl: "images/image-category-14-min.jpg",
+        imageUrl: "staycation_images/image-category-14-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd33"),
-        imageUrl: "images/image-category-15-min.jpg",
+        imageUrl: "staycation_images/image-category-15-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd34"),
-        imageUrl: "images/image-category-16-min.jpg",
+        imageUrl: "staycation_images/image-category-16-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd35"),
-        imageUrl: "images/image-category-17-min.jpg",
+        imageUrl: "staycation_images/image-category-17-min.jpg",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cd36"),
-        imageUrl: "images/image-category-18-min.jpg",
+        imageUrl: "staycation_images/image-category-18-min.jpg",
       },
     ],
   },
@@ -822,7 +824,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa01"),
         name: "bedroom",
         qty: 2,
-        imageUrl: "images/feature-1.png",
+        imageUrl: "staycation_images/feature-1.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
@@ -830,7 +832,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa02"),
         name: "living room",
         qty: 23,
-        imageUrl: "images/feature-2.png",
+        imageUrl: "staycation_images/feature-2.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
@@ -838,7 +840,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa03"),
         name: "televison",
         qty: 12,
-        imageUrl: "images/feature-3.png",
+        imageUrl: "staycation_images/feature-3.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
@@ -846,7 +848,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa04"),
         name: "televison",
         qty: 5,
-        imageUrl: "images/feature-4.png",
+        imageUrl: "staycation_images/feature-4.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
@@ -854,7 +856,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa05"),
         name: "mbp/s",
         qty: 5,
-        imageUrl: "images/feature-5.png",
+        imageUrl: "staycation_images/feature-5.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
@@ -862,7 +864,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa06"),
         name: "unit ready",
         qty: 5,
-        imageUrl: "images/feature-6.png",
+        imageUrl: "staycation_images/feature-6.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
@@ -870,7 +872,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa07"),
         name: "refigrator",
         qty: 5,
-        imageUrl: "images/feature-7.png",
+        imageUrl: "staycation_images/feature-7.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
@@ -878,7 +880,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa08"),
         name: "televion",
         qty: 5,
-        imageUrl: "images/feature-8.png",
+        imageUrl: "staycation_images/feature-8.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       // item 2
@@ -887,7 +889,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa09"),
         name: "bedroom",
         qty: 2,
-        imageUrl: "images/feature-1.png",
+        imageUrl: "staycation_images/feature-1.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
@@ -895,7 +897,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa10"),
         name: "living room",
         qty: 23,
-        imageUrl: "images/feature-2.png",
+        imageUrl: "staycation_images/feature-2.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
@@ -903,7 +905,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa11"),
         name: "televison",
         qty: 12,
-        imageUrl: "images/feature-3.png",
+        imageUrl: "staycation_images/feature-3.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
@@ -911,7 +913,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa12"),
         name: "televison",
         qty: 5,
-        imageUrl: "images/feature-4.png",
+        imageUrl: "staycation_images/feature-4.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
@@ -919,7 +921,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa13"),
         name: "mbp/s",
         qty: 5,
-        imageUrl: "images/feature-5.png",
+        imageUrl: "staycation_images/feature-5.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
@@ -927,7 +929,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa14"),
         name: "unit ready",
         qty: 5,
-        imageUrl: "images/feature-6.png",
+        imageUrl: "staycation_images/feature-6.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
@@ -935,7 +937,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa15"),
         name: "refigrator",
         qty: 5,
-        imageUrl: "images/feature-7.png",
+        imageUrl: "staycation_images/feature-7.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
@@ -943,7 +945,7 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90aa16"),
         name: "televion",
         qty: 5,
-        imageUrl: "images/feature-8.png",
+        imageUrl: "staycation_images/feature-8.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
     ],
@@ -958,28 +960,28 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90bb01"),
         name: "Green Lake",
         type: "Nature",
-        imageUrl: "images/activity-1.png",
+        imageUrl: "staycation_images/activity-1.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90bb02"),
         name: "Dog Clubs",
         type: "Pool",
-        imageUrl: "images/activity-2.png",
+        imageUrl: "staycation_images/activity-2.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90bb03"),
         name: "Labour and Wait",
         type: "Shopping",
-        imageUrl: "images/activity-3.png",
+        imageUrl: "staycation_images/activity-3.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90bb04"),
         name: "Labour and Wait",
         type: "Shopping",
-        imageUrl: "images/activity-4.png",
+        imageUrl: "staycation_images/activity-4.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
       },
       // done 2
@@ -987,28 +989,28 @@ var data = [
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90bb05"),
         name: "Green Lake",
         type: "Nature",
-        imageUrl: "images/activity-3.png",
+        imageUrl: "staycation_images/activity-3.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90bb06"),
         name: "Dog Clubs",
         type: "Pool",
-        imageUrl: "images/activity-2.png",
+        imageUrl: "staycation_images/activity-2.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90bb07"),
         name: "Labour and Wait",
         type: "Shopping",
-        imageUrl: "images/activity-1.png",
+        imageUrl: "staycation_images/activity-1.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90bb08"),
         name: "Labour and Wait",
         type: "Shopping",
-        imageUrl: "images/activity-4.png",
+        imageUrl: "staycation_images/activity-4.png",
         itemId: mongoose.Types.ObjectId("5e96cbe292b97300fc902223"),
       },
     ],
@@ -1034,7 +1036,7 @@ var data = [
         memberId: mongoose.Types.ObjectId("5e96cbe292b97300fc903333"),
         bankId: mongoose.Types.ObjectId("5e96cbe292b97300fc903323"),
         payments: {
-          proofPayment: "images/buktibayar.jpeg",
+          proofPayment: "staycation_images/buktibayar.jpeg",
           bankFrom: "BCA",
           status: "Process",
           accountHolder: "Erik",
@@ -1072,14 +1074,14 @@ var data = [
         nameBank: "BCA",
         nomorRekening: "089898",
         name: "Raka",
-        imageUrl: "images/logo-bca.png",
+        imageUrl: "staycation_images/logo-bca.png",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903323"),
         nameBank: "Mandiri",
         nomorRekening: "878678",
         name: "Ikbal",
-        imageUrl: "images/logo-mandiri.png",
+        imageUrl: "staycation_images/logo-mandiri.png",
       },
     ],
   },

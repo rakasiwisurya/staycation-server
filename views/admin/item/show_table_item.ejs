@@ -29,17 +29,17 @@
               <td><%= item[i].city %></td>
               <td>
                 <form
-                  action="/admin/item/<%= item[i].id %>?_method=DELETE"
+                  action="/admin/item/<%= item[i]._id %>?_method=DELETE"
                   method="POST"
                 >
                   <a
-                    href="/admin/item/show-image/<%= item[i].id %>"
+                    href="/admin/item/show-image/<%= item[i]._id %>"
                     class="btn btn-info btn-circle btn-sm"
                   >
                     <i class="fas fa-image"></i>
                   </a>
                   <a
-                    href="/admin/item/<%= item[i].id %>"
+                    href="/admin/item/<%= item[i]._id %>"
                     class="btn btn-warning btn-circle btn-sm"
                   >
                     <i class="fas fa-edit"></i>
@@ -51,7 +51,7 @@
                     <i class="fas fa-trash"></i>
                   </button>
                   <a
-                    href="/admin/item/show-detail-item/<%= item[i].id %>"
+                    href="/admin/item/show-detail-item/<%= item[i]._id %>"
                     class="btn btn-success btn-circle btn-sm"
                   >
                     <i class="fas fa-plus"></i>

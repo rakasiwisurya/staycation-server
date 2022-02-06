@@ -36,22 +36,18 @@
             <td><%= bank[i].nomorRekening %></td>
             <td><%= bank[i].name %></td>
             <td>
-              <img
-                src="http://localhost:4000/<%= bank[i].imageUrl %>"
-                alt="imageUrl"
-                width="70"
-              />
+              <img src="<%= bank[i].imageUrl %>" alt="imageUrl" width="70" />
             </td>
             <td>
               <form
-                action="/admin/bank/<%= bank[i].id %>?_method=DELETE"
+                action="/admin/bank/<%= bank[i]._id %>?_method=DELETE"
                 method="POST"
               >
                 <a
                   href="javascript:void()"
                   type="button"
                   class="btn btn-warning btn-circle btn-sm button-update"
-                  data-id="<%= bank[i].id %>"
+                  data-id="<%= bank[i]._id %>"
                   data-namebank="<%= bank[i].nameBank %>"
                   data-nomorrekening="<%= bank[i].nomorRekening %>"
                   data-name="<%= bank[i].name %>"
