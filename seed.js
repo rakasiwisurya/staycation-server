@@ -3,9 +3,8 @@ var seeder = require("mongoose-seed");
 var mongoose = require("mongoose");
 
 // Connect to MongoDB via Mongoose
-console.log(process.env.BASE_URL_LOCALMONGOCONNECT);
 seeder.connect(
-  process.env.BASE_URL_LOCALMONGOCONNECT,
+  process.env.BASE_URL_MONGOCONNECT,
   {
     useNewUrlParser: true,
     useCreateIndex: true,

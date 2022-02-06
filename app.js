@@ -9,7 +9,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 // import mongoose
 const mongoose = require("mongoose");
-mongoose.connect(process.env.BASE_URL_LOCALMONGOCONNECT, {
+mongoose.connect(process.env.BASE_URL_MONGOCONNECT, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
