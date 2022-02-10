@@ -5,6 +5,7 @@ const Category = require("../models/Category");
 const Bank = require("../models/Bank");
 const Member = require("../models/Member");
 const Booking = require("../models/Booking");
+const cloudinary = require("../third-party/cloudinary")
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -17,6 +18,14 @@ module.exports = {
         .select("_id title country city price unit")
         .limit(5)
         .populate({ path: "imageId", select: "_id imageUrl" });
+
+        const mostPickedData = mostPicked.map((item) => ({
+          ...item._doc,
+          imageId: item.imageId.map((image) => ({
+            ...image._doc,
+            imageUrl: cloudinary.url(image.imageUrl)
+          }))
+        }))
 
       const category = await Category.find()
         .select("_id name")
@@ -49,6 +58,17 @@ module.exports = {
         }
       }
 
+      const categoryData = category.map((item) => ({
+        ...item._doc,
+        itemId: item.itemId.map((value) => ({
+          ...value._doc,
+          imageId: value.imageId.map((image) => ({
+            ...image._doc,
+            imageUrl: cloudinary.url(image.imageUrl)
+          }))
+        }))
+      }))
+
       const testimonial = {
         _id: "asd1293uasdads1",
         imageUrl: "/images/testimonial1.jpg",
@@ -66,8 +86,8 @@ module.exports = {
           treasures: treasure.length,
           cities: city.length,
         },
-        mostPicked,
-        category,
+        mostPicked: mostPickedData,
+        category: categoryData,
         testimonial,
       });
     } catch (error) {
