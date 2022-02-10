@@ -71,7 +71,7 @@ module.exports = {
 
       const testimonial = {
         _id: "asd1293uasdads1",
-        imageUrl: "/images/testimonial1.jpg",
+        imageUrl: cloudinary.url("staycation_images/testimonial1.jpg"),
         name: "Happy Family",
         rate: 4.55,
         content:
@@ -108,11 +108,32 @@ module.exports = {
         .populate({ path: "activityId", select: "_id name type imageUrl" })
         .populate({ path: "imageId", select: "_id imageUrl" });
 
+      const itemData = {
+        ...item._doc,
+        featureId: item.featureId.map((feature) => ({
+          ...feature._doc,
+          imageUrl: cloudinary.url(feature.imageUrl)
+        })),
+        activityId: item.activityId.map((activity) => ({
+          ...activity._doc,
+          imageUrl: cloudinary.url(activity.url)
+        })),
+        imageId: item.imageId.map((image) => ({
+          ...image._doc,
+          imageUrl: cloudinary.url(image.imageUrl)
+        }))
+      }
+
       const bank = await Bank.find();
+
+      const bankData = bank.map((item) => ({
+        ...item._doc,
+        imageUrl: cloudinary.url(item.imageUrl)
+      }))
 
       const testimonial = {
         _id: "asd1293uasdads1",
-        imageUrl: "/images/testimonial1.jpg",
+        imageUrl: cloudinary.url("staycation_images/testimonial1.jpg"),
         name: "Happy Family",
         rate: 4.55,
         content:
@@ -122,8 +143,8 @@ module.exports = {
       };
 
       res.status(200).json({
-        ...item._doc,
-        bank,
+        ...itemData,
+        bank: bankData,
         testimonial,
       });
     } catch (error) {
@@ -202,6 +223,12 @@ module.exports = {
         });
       }
 
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "staycation_images",
+        use_filename: true,
+        unique_filename: false,
+      });
+
       const newBooking = {
         invoice,
         bookingStartDate,
@@ -215,7 +242,7 @@ module.exports = {
         },
         memberId: member._id,
         payments: {
-          proofPayment: `images/${req.file.filename}`,
+          proofPayment: result.public_id,
           bankFrom,
           accountHolder,
         },
