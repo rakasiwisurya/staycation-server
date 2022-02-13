@@ -116,7 +116,7 @@ module.exports = {
         })),
         activityId: item.activityId.map((activity) => ({
           ...activity._doc,
-          imageUrl: cloudinary.url(activity.url),
+          imageUrl: cloudinary.url(activity.imageUrl),
         })),
         imageId: item.imageId.map((image) => ({
           ...image._doc,
