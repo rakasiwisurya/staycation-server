@@ -175,13 +175,13 @@ module.exports = {
     try {
       const schema = Joi.object({
         itemId: Joi.string().required(),
-        duration: Joi.number().min(1).max(1).required(),
+        duration: Joi.number().required(),
         bookingStartDate: Joi.date().required(),
         bookingEndDate: Joi.date().required(),
         firstName: Joi.string().min(3).max(20).required(),
         lastName: Joi.string().min(3).max(20).required(),
-        email: Joi.email().required(),
-        phoneNumber: Joi.number().min(10).max(15).required(),
+        email: Joi.string().email().required(),
+        phoneNumber: Joi.number().required(),
         accountHolder: Joi.string().min(3).max(20).required(),
         bankFrom: Joi.string()
           .valid("BCA", "bca", "Mandiri", "mandiri")
@@ -250,12 +250,7 @@ module.exports = {
       }
 
       let bankId;
-      if (
-        bankFrom === "BCA" ||
-        bankFrom === "bca" ||
-        bankFrom === "Bank Central Asia" ||
-        bankFrom === "bank central asia"
-      ) {
+      if (bankFrom === "BCA" || bankFrom === "bca") {
         const bank = await Bank.findOne({ nameBank: "BCA" });
         bankId = bank._id;
       } else {
