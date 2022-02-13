@@ -7,6 +7,8 @@ const Member = require("../models/Member");
 const Booking = require("../models/Booking");
 const cloudinary = require("../third-party/cloudinary");
 
+const Joi = require("joi");
+
 module.exports = {
   landingPage: async (req, res) => {
     try {
@@ -171,6 +173,30 @@ module.exports = {
     } = req.body;
 
     try {
+      const schema = Joi.object({
+        itemId: Joi.string().required(),
+        duration: Joi.number().min(1).max(1).required(),
+        bookingStartDate: Joi.date().required(),
+        bookingEndDate: Joi.date().required(),
+        firstName: Joi.string().min(3).max(20).required(),
+        lastName: Joi.string().min(3).max(20).required(),
+        email: Joi.email().required(),
+        phoneNumber: Joi.number().min(10).max(15).required(),
+        accountHolder: Joi.string().min(3).max(20).required(),
+        bankFrom: Joi.string()
+          .valid("BCA", "bca", "Mandiri", "mandiri")
+          .required(),
+      });
+
+      const { error } = schema.validate(req.body);
+
+      if (error) {
+        return res.status(400).json({
+          status: "Failed",
+          message: error.details[0].message,
+        });
+      }
+
       if (!req.file) {
         return res.status(404).json({
           status: "Failed",
@@ -223,6 +249,20 @@ module.exports = {
         });
       }
 
+      let bankId;
+      if (
+        bankFrom === "BCA" ||
+        bankFrom === "bca" ||
+        bankFrom === "Bank Central Asia" ||
+        bankFrom === "bank central asia"
+      ) {
+        const bank = await Bank.findOne({ nameBank: "BCA" });
+        bankId = bank._id;
+      } else {
+        const bank = await Bank.findOne({ nameBank: "Mandiri" });
+        bankId = bank._id;
+      }
+
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "staycation_images",
         use_filename: true,
@@ -246,6 +286,7 @@ module.exports = {
           bankFrom,
           accountHolder,
         },
+        bankId,
       };
 
       const booking = await Booking.create(newBooking);
