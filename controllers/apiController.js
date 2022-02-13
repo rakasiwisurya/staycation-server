@@ -5,7 +5,7 @@ const Category = require("../models/Category");
 const Bank = require("../models/Bank");
 const Member = require("../models/Member");
 const Booking = require("../models/Booking");
-const cloudinary = require("../third-party/cloudinary")
+const cloudinary = require("../third-party/cloudinary");
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -19,13 +19,13 @@ module.exports = {
         .limit(5)
         .populate({ path: "imageId", select: "_id imageUrl" });
 
-        const mostPickedData = mostPicked.map((item) => ({
-          ...item._doc,
-          imageId: item.imageId.map((image) => ({
-            ...image._doc,
-            imageUrl: cloudinary.url(image.imageUrl)
-          }))
-        }))
+      const mostPickedData = mostPicked.map((item) => ({
+        ...item._doc,
+        imageId: item.imageId.map((image) => ({
+          ...image._doc,
+          imageUrl: cloudinary.url(image.imageUrl),
+        })),
+      }));
 
       const category = await Category.find()
         .select("_id name")
@@ -64,10 +64,10 @@ module.exports = {
           ...value._doc,
           imageId: value.imageId.map((image) => ({
             ...image._doc,
-            imageUrl: cloudinary.url(image.imageUrl)
-          }))
-        }))
-      }))
+            imageUrl: cloudinary.url(image.imageUrl),
+          })),
+        })),
+      }));
 
       const testimonial = {
         _id: "asd1293uasdads1",
@@ -87,7 +87,7 @@ module.exports = {
           cities: city.length,
         },
         mostPicked: mostPickedData,
-        category: categoryData,
+        categories: categoryData,
         testimonial,
       });
     } catch (error) {
@@ -112,24 +112,24 @@ module.exports = {
         ...item._doc,
         featureId: item.featureId.map((feature) => ({
           ...feature._doc,
-          imageUrl: cloudinary.url(feature.imageUrl)
+          imageUrl: cloudinary.url(feature.imageUrl),
         })),
         activityId: item.activityId.map((activity) => ({
           ...activity._doc,
-          imageUrl: cloudinary.url(activity.url)
+          imageUrl: cloudinary.url(activity.url),
         })),
         imageId: item.imageId.map((image) => ({
           ...image._doc,
-          imageUrl: cloudinary.url(image.imageUrl)
-        }))
-      }
+          imageUrl: cloudinary.url(image.imageUrl),
+        })),
+      };
 
       const bank = await Bank.find();
 
       const bankData = bank.map((item) => ({
         ...item._doc,
-        imageUrl: cloudinary.url(item.imageUrl)
-      }))
+        imageUrl: cloudinary.url(item.imageUrl),
+      }));
 
       const testimonial = {
         _id: "asd1293uasdads1",
