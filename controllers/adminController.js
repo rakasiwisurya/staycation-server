@@ -211,7 +211,7 @@ module.exports = {
           use_filename: true,
           unique_filename: false,
         });
-        
+
         // await fs.unlink(path.join(`public/${bank.imageUrl}`));
         await cloudinary.uploader.destroy(bank.imageUrl);
 
@@ -227,7 +227,6 @@ module.exports = {
       req.flash("alertStatus", "success");
       res.redirect("/admin/bank");
     } catch (error) {
-      console.log(error);
       req.flash("alertMessage", error.message);
       req.flash("alertStatus", "danger");
       res.redirect("/admin/bank");
@@ -235,8 +234,6 @@ module.exports = {
   },
 
   deleteBank: async (req, res) => {
-    console.log(req);
-
     try {
       const { id } = req.params;
       const bank = await Bank.findOne({ _id: id });
@@ -730,8 +727,6 @@ module.exports = {
           imageUrl: cloudinary.url(bookingItem.bankId.imageUrl),
         },
       };
-
-      console.log(booking);
 
       res.render("admin/booking/show_detail_booking", {
         title: "Staycation | Detail Booking",
