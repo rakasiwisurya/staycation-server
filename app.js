@@ -4,6 +4,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const favicon = require("serve-favicon");
 const cors = require("cors");
 const methodOverride = require("method-override");
 const session = require("express-session");
@@ -40,6 +41,7 @@ app.use(
 app.use(flash());
 app.use(logger("dev"));
 app.use(express.json());
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
