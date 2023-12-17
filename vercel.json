@@ -2,26 +2,26 @@
   "version": 2,
   "builds": [
     {
-      "src": "bin/www",
+      "src": "/bin/www",
       "use": "@vercel/node"
     },
     {
-      "src": "public/**",
+      "src": "/public/**",
       "use": "@vercel/static"
     },
     {
-      "src": "node_modules/startbootstrap-sb-admin-2/**",
+      "src": "/node_modules/startbootstrap-sb-admin-2/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/node_modules/startbootstrap-sb-admin-2/(.+)",
-      "dest": "/sb-admin-2"
-    },
-    {
       "src": "/(.*)",
       "dest": "/bin/www"
+    },
+    {
+      "src": "/sb-admin-2/(.*)",
+      "dest": "/node_modules/startbootstrap-sb-admin-2/$1"
     }
   ]
 }
