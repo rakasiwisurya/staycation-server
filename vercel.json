@@ -8,9 +8,17 @@
     {
       "src": "public/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "node_modules/startbootstrap-sb-admin-2/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/node_modules/startbootstrap-sb-admin-2/(.+)",
+      "dest": "/sb-admin-2"
+    },
     {
       "src": "/(.*)",
       "dest": "/bin/www"
