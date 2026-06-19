@@ -54,4 +54,19 @@ const removeImage = async (imageUrl) => {
   }
 };
 
-module.exports = { fileUrl, assetUrl, removeImage };
+/**
+ * Builds the stored image URL for a known demo/seed asset (by filename) for the
+ * active driver: an absolute Cloudinary URL in cloudinary mode, else a relative
+ * path served from public/images. Shared by the seeder and hardcoded demo
+ * content (e.g. the testimonial image).
+ */
+const publicImageUrl = (value) => {
+  const file = value.replace(/^images\//, "");
+  if (config.usesCloudinary) {
+    const { cloudName, folder } = config.cloudinary;
+    return `https://res.cloudinary.com/${cloudName}/image/upload/${folder}/${file}`;
+  }
+  return `images/${file}`;
+};
+
+module.exports = { fileUrl, assetUrl, removeImage, publicImageUrl };

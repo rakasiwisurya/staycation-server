@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const config = require("./config");
+const { publicImageUrl } = require("./helpers/storage");
 
 const Category = require("./models/Category");
 const Bank = require("./models/Bank");
@@ -1076,6 +1077,23 @@ const models = {
   Users,
 };
 
+const isPlainObject = (value) =>
+  value && typeof value === "object" && value.constructor === Object;
+
+/** Rewrites every imageUrl / proofPayment string in the seed tree for the driver. */
+const rewriteImageUrls = (node) => {
+  if (Array.isArray(node)) return node.forEach(rewriteImageUrls);
+  if (!isPlainObject(node)) return;
+
+  for (const [key, value] of Object.entries(node)) {
+    if ((key === "imageUrl" || key === "proofPayment") && typeof value === "string") {
+      node[key] = publicImageUrl(value);
+    } else {
+      rewriteImageUrls(value);
+    }
+  }
+};
+
 /**
  * Wipes and repopulates every collection from the `data` blocks above. Run with
  * `npm run seed`. Targets whatever `MONGODB_URI` points at (local or Atlas).
@@ -1083,6 +1101,8 @@ const models = {
 const seed = async () => {
   await mongoose.connect(config.mongoUri);
   console.log(`Seeding ${mongoose.connection.host}/${mongoose.connection.name} ...`);
+
+  data.forEach((block) => rewriteImageUrls(block.documents));
 
   for (const { model, documents } of data) {
     const Model = models[model];

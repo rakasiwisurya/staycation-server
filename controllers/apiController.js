@@ -4,11 +4,11 @@ const Category = require("../models/Category");
 const Bank = require("../models/Bank");
 const Member = require("../models/Member");
 const Booking = require("../models/Booking");
-const { fileUrl } = require("../helpers/storage");
+const { fileUrl, publicImageUrl } = require("../helpers/storage");
 
 const TESTIMONIAL = {
   _id: "asd1293uasdads1",
-  imageUrl: "images/testimonial1.jpg",
+  imageUrl: publicImageUrl("images/testimonial1.jpg"),
   name: "Happy Family",
   rate: 4.55,
   content:
