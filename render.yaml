@@ -1,0 +1,33 @@
+# Render Blueprint for the Staycation backend (production branch).
+# Secrets (MONGODB_URI, Cloudinary keys, SESSION_SECRET) are set in the Render
+# dashboard and intentionally left with `sync: false` here.
+services:
+  - type: web
+    name: staycation-server
+    runtime: node
+    plan: free
+    branch: production
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /admin/signin
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: STORAGE_DRIVER
+        value: cloudinary
+      - key: SERVER_URL
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: staycation

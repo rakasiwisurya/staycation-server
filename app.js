@@ -1,45 +1,65 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const path = require("path");
+const createError = require("http-errors");
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
-// import mongoose
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/db_staycation", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-});
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-// router admin
+const config = require("./config");
+const { assetUrl } = require("./helpers/storage");
+
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
 const apiRouter = require("./routes/api");
 
-var app = express();
+const app = express();
 
-// view engine setup
+// Behind Render's proxy in production so secure cookies work correctly.
+if (config.isProduction) app.set("trust proxy", 1);
+
+// View engine (EJS admin dashboard).
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(methodOverride("_method"));
+
+// Cross-origin access for the React client.
 app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 },
+  cors({
+    origin: config.corsOrigins.length ? config.corsOrigins : true,
+    credentials: true,
   })
 );
-app.use(flash());
-app.use(logger("dev"));
+
+app.use(logger(config.isProduction ? "combined" : "dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(methodOverride("_method"));
+
+app.use(
+  session({
+    secret: config.session.secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: config.isProduction,
+      maxAge: 1000 * 60 * 60 * 2, // 2 hours
+    },
+  })
+);
+app.use(flash());
+
+// Expose the asset URL resolver to every EJS template.
+app.use((req, res, next) => {
+  res.locals.assetUrl = assetUrl;
+  next();
+});
+
+// Static assets: uploaded images (local driver) and the admin theme.
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   "/sb-admin-2",
@@ -48,25 +68,26 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-// router admin
 app.use("/admin", adminRouter);
-// router api
 app.use("/api/v1/member", apiRouter);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
+// 404 handler.
+app.use((req, res, next) => next(createError(404)));
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
+// Error handler. API requests get JSON; everything else renders the error view.
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+
+  if (req.path.startsWith("/api/")) {
+    return res.status(status).json({
+      status: "Failed",
+      message: status === 500 ? "Internal server error" : err.message,
+    });
+  }
+
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  res.locals.error = config.isProduction ? {} : err;
+  res.status(status).render("error");
 });
 
 module.exports = app;
