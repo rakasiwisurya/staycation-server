@@ -65,21 +65,21 @@
                   <td><%= feature[i].qty %></td>
                   <td>
                     <img
-                      src="<%= feature[i].imageUrl %>"
+                      src="<%= assetUrl(feature[i].imageUrl) %>"
                       alt="imageUrl"
                       width="70"
                     />
                   </td>
                   <td>
                     <form
-                      action="/admin/item/<%= itemId %>/feature/<%= feature[i]._id %>?_method=DELETE"
+                      action="/admin/item/<%= itemId %>/feature/<%= feature[i].id %>?_method=DELETE"
                       method="POST"
                     >
                       <a
                         href="javascript:void()"
                         type="button"
                         class="btn btn-warning btn-circle btn-sm button-update"
-                        data-id="<%= feature[i]._id %>"
+                        data-id="<%= feature[i].id %>"
                         data-name="<%= feature[i].name %>"
                         data-qty="<%= feature[i].qty %>"
                       >
